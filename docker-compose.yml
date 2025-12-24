@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: shop-postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: ecommerce_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - shop-network
+
+  mongodb:
+    image: mongo:6-jammy
+    container_name: shop-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - shop-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: shop-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - shop-network
+
+  # Application services are commented out for initial dev setup
+  # Uncomment to test full containerized deployment
+  
+  # backend:
+  #   build: ./server
+  #   ports:
+  #     - "5000:5000"
+  #   environment:
+  #     - DATABASE_URL=postgresql://admin:password123@postgres:5432/ecommerce_db
+  #     - MONGO_URI=mongodb://mongodb:27017/ecommerce_tracking
+  #     - REDIS_URL=redis://redis:6379
+  #   depends_on:
+  #     - postgres
+  #     - mongodb
+  #     - redis
+  #   networks:
+  #     - shop-network
+
+  # ml-service:
+  #   build: ./ml_service
+  #   ports:
+  #     - "5001:5001"
+  #   networks:
+  #     - shop-network
+
+  # client:
+  #   build: ./client
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - shop-network
+
+networks:
+  shop-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  mongo_data:
