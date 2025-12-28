@@ -1,45 +1,47 @@
-# AI-Powered E-commerce Platform
+# Scalable E-commerce Platform
 
-A full-stack e-commerce application with personalized product recommendations.
+A production-grade, event-driven e-commerce platform built with a microservices architecture using Java 17, Spring Boot 3.2, and React.
 
-## Tech Stack
-- **Frontend**: React, TypeScript, Tailwind CSS, Vite
-- **Backend**: Node.js, Express, Prisma, PostgreSQL (or SQLite dev), MongoDB (Tracking)
-- **ML Engine**: Python, Flask, Scikit-learn
+## 🚀 Overview
 
-## Setup
+This project demonstrates a modern distributed system architecture designed for high scalability and availability. It transitions from a monolithic structure to a set of independent, specialized microservices.
 
-### 1. Environment Variables
-Check `server/.env`. Default configured for local SQLite dev.
+## 🏗️ Architecture
 
-### 2. Backend
-```bash
-cd server
-npm install
-npx prisma migrate dev --name init
-npx ts-node scripts/seed.ts
-# Server runs on Port 8080 (to avoid MacOS conflicts)
-npm run dev
-```
+The platform consists of several core components:
 
-### 3. Frontend
-```bash
-cd client
-npm install
-# Runs on localhost:5173
-npm run dev
-```
+### Backend Microservices
+- **API Gateway (8080)**: Central entry point and request router.
+- **Product Service (8081)**: Manages product catalog and categories.
+- **User Service (8082)**: Authentication and profile management (JWT-based).
+- **Cart Service (8083)**: Shopping cart management using Redis and PostgreSQL.
+- **Order Service (8084)**: Orchestrates the checkout and order lifecycle.
+- **Payment Service (8085)**: Mock payment processing system.
+- **Inventory Service (8086)**: Real-time stock management and reservations.
+- **Notification Service (8087)**: Multi-channel notification hub.
 
-### 4. ML Service (Recommendation Engine)
-```bash
-cd ml_service
-pip install -r requirements.txt
-python app.py
-```
-*Note: The backend will work without the ML service (fallback mode).*
+### Frontend
+- **E-Shop Web**: A premium React application built with TypeScript, Redux Toolkit, and Tailwind CSS.
 
-## Features
-- **Authentication**: JWT-based auth.
-- **Shopping**: Browse products, add to cart, checkout.
-- **Recommendations**: Collaborative filtering based on user history.
-- **Tracking**: User clicks and views logged to MongoDB (optional).
+### Infrastructure
+- **Databases**: Separate PostgreSQL instances for each microservice.
+- **Caching**: Redis for high-performance session and cart storage.
+- **Messaging**: Apache Kafka (Phase 2) for asynchronous event-driven communication.
+- **Monitoring**: Prometheus and Grafana for system health and metrics.
+
+## 🛠️ Quick Start
+
+Detailed instructions can be found in [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).
+
+1. **Infrastructure**: `docker-compose up -d`
+2. **Build**: `./scripts/build-all.sh`
+3. **Run**: `./scripts/run-all.sh`
+
+## 📚 Documentation
+
+- [Architecture Overview](docs/ARCHITECTURE.md)
+- [Project Progress](docs/PROGRESS.md)
+- [Getting Started Guide](docs/GETTING_STARTED.md)
+
+---
+*Built for scale. Powered by Event-Driven Microservices.*
