@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ecommerce-config
+data:
+  POSTGRES_HOST: postgres-service
+  POSTGRES_PORT: "5432"
+  REDIS_HOST: redis-service
+  REDIS_PORT: "6379"
+  KAFKA_BOOTSTRAP_SERVERS: kafka-service:9092
+  PROMETHEUS_SCRAPE_PATH: "/actuator/prometheus"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ecommerce-secrets
+type: Opaque
+data:
+  # Base64 encoded 'postgres'
+  POSTGRES_USER: cG9zdGdyZXM=
+  POSTGRES_PASSWORD: cG9zdGdyZXM=
+  JWT_SECRET: bXktc3VwZXItc2VjcmV0LWtleS13aGljaC1zaG91bGQtYmUtYXQtbGVhc3QtMjU2LWJpdHMtZm9yLWhzMjU2LWFsZ29yaXRobQ== # base64 for a sample long key

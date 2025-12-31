@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-user
+spec:
+  replicas: {{ .Values.userService.replicaCount }}
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+      - name: user-service
+        image: "{{ .Values.global.image.repository }}/user-service:{{ .Values.global.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.userService.port }}
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:postgresql://{{ .Values.global.postgres.host }}:{{ .Values.global.postgres.port }}/user_db
+        - name: SECURITY_JWT_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ecommerce-secrets
+              key: JWT_SECRET
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+spec:
+  selector:
+    app: user-service
+  ports:
+  - protocol: TCP
+    port: {{ .Values.userService.port }}
+    targetPort: {{ .Values.userService.port }}

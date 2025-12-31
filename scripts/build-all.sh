@@ -2,6 +2,7 @@
 
 # Build all microservices
 services=(
+  "shared/shared-events"
   "services/product-service"
   "services/user-service"
   "services/inventory-service"

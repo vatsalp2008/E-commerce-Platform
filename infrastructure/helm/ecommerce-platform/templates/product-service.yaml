@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-product
+spec:
+  replicas: {{ .Values.productService.replicaCount }}
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+      - name: product-service
+        image: "{{ .Values.global.image.repository }}/product-service:{{ .Values.global.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.productService.port }}
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:postgresql://{{ .Values.global.postgres.host }}:{{ .Values.global.postgres.port }}/product_db
+        resources:
+          {{- toYaml .Values.productService.resources | nindent 10 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+spec:
+  selector:
+    app: product-service
+  ports:
+  - protocol: TCP
+    port: {{ .Values.productService.port }}
+    targetPort: {{ .Values.productService.port }}

@@ -2,46 +2,52 @@
 
 A production-grade, event-driven e-commerce platform built with a microservices architecture using Java 17, Spring Boot 3.2, and React.
 
-## 🚀 Overview
+---
 
-This project demonstrates a modern distributed system architecture designed for high scalability and availability. It transitions from a monolithic structure to a set of independent, specialized microservices.
+## 🚀 Quick Start
 
-## 🏗️ Architecture
+### Prerequisites
+- Java 17+ & Maven
+- Node.js 18+
+- Docker & Docker Compose
 
-The platform consists of several core components:
+### Setup & Run
+1. **Start Infrastructure**:
+   ```bash
+   docker-compose up -d
+   ```
+2. **Build All Services**:
+   ```bash
+   ./scripts/build-all.sh
+   ```
+3. **Run All Services**:
+   ```bash
+   ./scripts/run-all.sh
+   ```
+4. **Start Frontend**:
+   ```bash
+   cd frontend && npm install && npm run dev
+   ```
 
-### Backend Microservices
-- **API Gateway (8080)**: Central entry point and request router.
-- **Product Service (8081)**: Manages product catalog and categories.
-- **User Service (8082)**: Authentication and profile management (JWT-based).
-- **Cart Service (8083)**: Shopping cart management using Redis and PostgreSQL.
-- **Order Service (8084)**: Orchestrates the checkout and order lifecycle.
-- **Payment Service (8085)**: Mock payment processing system.
-- **Inventory Service (8086)**: Real-time stock management and reservations.
-- **Notification Service (8087)**: Multi-channel notification hub.
+### Access Points
+- **Web UI**: `http://localhost:5173`
+- **API Gateway**: `http://localhost:8080/api`
+- **Dashboards**: Grafana (`:3000`), Prometheus (`:9090`)
 
-### Frontend
-- **E-Shop Web**: A premium React application built with TypeScript, Redux Toolkit, and Tailwind CSS.
+---
 
-### Infrastructure
-- **Databases**: Separate PostgreSQL instances for each microservice.
-- **Caching**: Redis for high-performance session and cart storage.
-- **Messaging**: Apache Kafka (Phase 2) for asynchronous event-driven communication.
-- **Monitoring**: Prometheus and Grafana for system health and metrics.
+## 🏗️ Architecture & Design
 
-## 🛠️ Quick Start
+This platform demonstrates a modern distributed system using **Choreography-based Sagas** and the **Transactional Outbox** pattern for eventual consistency.
 
-Detailed instructions can be found in [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).
+Detailed technical specifications, including event schemas and sequence diagrams, can be found in the [**Technical Design Document**](docs/DESIGN.md).
 
-1. **Infrastructure**: `docker-compose up -d`
-2. **Build**: `./scripts/build-all.sh`
-3. **Run**: `./scripts/run-all.sh`
-
-## 📚 Documentation
-
-- [Architecture Overview](docs/ARCHITECTURE.md)
-- [Project Progress](docs/PROGRESS.md)
-- [Getting Started Guide](docs/GETTING_STARTED.md)
+### Core Microservices
+- **API Gateway**: Centralized routing and cross-cutting concerns.
+- **Product & Inventory**: Catalog management and real-time stock reservation.
+- **User & Cart**: JWT-based auth and high-performance session storage.
+- **Order & Payment**: Saga-based checkout flow with Kafka event streaming.
+- **Notification**: Multi-channel user engagement.
 
 ---
 *Built for scale. Powered by Event-Driven Microservices.*

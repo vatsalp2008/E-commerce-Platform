@@ -1,0 +1,65 @@
+# Default values for ecommerce-platform.
+# This is a YAML-formatted file.
+
+global:
+  image:
+    repository: ecommerce
+    tag: latest
+    pullPolicy: IfNotPresent
+  postgres:
+    host: postgres-service
+    port: 5432
+    user: postgres
+    password: postgres
+  redis:
+    host: redis-service
+    port: 6379
+  kafka:
+    bootstrapServers: kafka-service:9092
+
+productService:
+  enabled: true
+  replicaCount: 2
+  port: 8081
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+userService:
+  enabled: true
+  replicaCount: 2
+  port: 8082
+
+cartService:
+  enabled: true
+  replicaCount: 1
+  port: 8083
+
+orderService:
+  enabled: true
+  replicaCount: 2
+  port: 8084
+
+paymentService:
+  enabled: true
+  replicaCount: 1
+  port: 8085
+
+inventoryService:
+  enabled: true
+  replicaCount: 1
+  port: 8086
+
+notificationService:
+  enabled: true
+  replicaCount: 1
+  port: 8087
+
+apiGateway:
+  enabled: true
+  replicaCount: 2
+  port: 8080
