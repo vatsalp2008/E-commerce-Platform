@@ -44,6 +44,10 @@ spring:
         uri: http://localhost:8087
         predicates:
         - Path=/api/notifications/**
+      - id: recommendation-service
+        uri: http://localhost:8000
+        predicates:
+        - Path=/api/recommendations/**
 
 server:
   port: 8080
