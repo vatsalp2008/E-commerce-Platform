@@ -9,6 +9,8 @@
 	<description>Shared Event DTOs for Scalable E-commerce Platform</description>
 	<properties>
 		<java.version>17</java.version>
+		<maven.compiler.release>17</maven.compiler.release>
+		<maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
 		<lombok.version>1.18.30</lombok.version>
 	</properties>
 	<dependencies>
@@ -24,4 +26,14 @@
 			<version>2.15.3</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+			</plugin>
+		</plugins>
+	</build>
 </project>
