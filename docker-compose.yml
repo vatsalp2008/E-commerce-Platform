@@ -69,9 +69,9 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - PRODUCT_SERVICE_URL=http://product-service:8081
-    depends_on:
-      - product-service
+      - PRODUCT_SERVICE_URL=http://host.docker.internal:8081
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
 volumes:
   postgres_data:
