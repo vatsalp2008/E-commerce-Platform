@@ -35,12 +35,13 @@ public class InventoryEventListener {
                         .orElseThrow(
                                 () -> new RuntimeException("Product not found in inventory: " + item.getProductId()));
 
-                if (inventory.getQuantity() < item.getQuantity()) {
+                if (inventory.getQuantityAvailable() < item.getQuantity()) {
                     allReserved = false;
                     break;
                 }
 
-                inventory.setQuantity(inventory.getQuantity() - item.getQuantity());
+                inventory.setQuantityAvailable(inventory.getQuantityAvailable() - item.getQuantity());
+                inventory.setQuantityReserved(inventory.getQuantityReserved() + item.getQuantity());
                 inventoryRepository.save(inventory);
             }
 
