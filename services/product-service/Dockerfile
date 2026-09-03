@@ -5,7 +5,7 @@ COPY services/product-service services/product-service
 RUN mvn -B -f services/product-service/pom.xml package -DskipTests
 
 # Runtime stage
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=build /build/services/product-service/target/*.jar app.jar
 EXPOSE 8081

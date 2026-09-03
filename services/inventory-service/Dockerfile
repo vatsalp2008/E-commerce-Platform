@@ -7,7 +7,7 @@ COPY services/inventory-service services/inventory-service
 RUN mvn -B -f services/inventory-service/pom.xml package -DskipTests
 
 # Runtime stage
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=build /build/services/inventory-service/target/*.jar app.jar
 EXPOSE 8086

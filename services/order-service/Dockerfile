@@ -7,7 +7,7 @@ COPY services/order-service services/order-service
 RUN mvn -B -f services/order-service/pom.xml package -DskipTests
 
 # Runtime stage
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=build /build/services/order-service/target/*.jar app.jar
 EXPOSE 8084

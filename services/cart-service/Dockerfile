@@ -5,7 +5,7 @@ COPY services/cart-service services/cart-service
 RUN mvn -B -f services/cart-service/pom.xml package -DskipTests
 
 # Runtime stage
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=build /build/services/cart-service/target/*.jar app.jar
 EXPOSE 8083
